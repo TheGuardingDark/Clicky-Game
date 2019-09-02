@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "The Android Sent By Cyberlife",
+        "image": "./images/connor.jpg"
+    },
+    {
+        "id": 2,
+        "name": "Boomer",
+        "image": "./images/boomer.jpg"
+    },
+    {
+        "id": 3,
+        "name": "Emil",
+        "image": "./images/Emil.jpg"
+    }
+]

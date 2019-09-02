@@ -5,7 +5,11 @@ function CharacterCard(props) {
   return (
       <div className="card">
           <div className="img-container">
-              <img alt={props.name} src={props.image} />
+              <img className="card-img-top" 
+               alt={props.name}
+               src={props.image}
+               clicked={props.clicked}
+               onClick={()=>props.score(props.id)} />
           </div>
           <div className="content">
               <ul>

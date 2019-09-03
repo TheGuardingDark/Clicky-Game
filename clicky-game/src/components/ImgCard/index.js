@@ -5,18 +5,12 @@ function CharacterCard(props) {
   return (
       <div className="card">
           <div className="img-container">
-              <img className="card-img-top" 
+              <img 
+               className="card-img-top" 
                alt={props.name}
                src={props.image}
                clicked={props.clicked}
-               onClick={()=>props.score(props.id)} />
-          </div>
-          <div className="content">
-              <ul>
-                  <li>
-                      <strong>Name:</strong> {props.name}
-                  </li>
-              </ul>
+               onClick={()=>props.handleClick(props.id)} />
           </div>
       </div>
   )};

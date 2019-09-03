@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Wrapper from './components/Wrapper';
 import CharacterCard from './components/ImgCard';
 import Scores from './components/Score';
-import Record from './components/Record';
 import Header from './components/Header';
 import characters from './characters.json';
 import './App.css';
@@ -14,32 +13,74 @@ class App extends Component {
     highScore: 0,
     wins: 0,
     losses: 0,
-    clicked: 0,
   }
+  
+  
+shuffle = array => {
+    var i = 0;
+    var j = 0;
+    var temp = null;
+    for (i = array.length - 1; i > 0; i-= 1) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array
 
-  componentDidMount=()=>{
-    this.update()
+}; 
+  
+  reset = characters => {
+    const reset = characters.map(item => ({ ...item, clicked: 0 }));
+    return this.shuffle(reset);
   }
-
-  shuffle = (array) => {
-      var i = 0;
-      var j = 0;
-      var temp = null;
-      for (i = array.length - 1; i > 0; i-= 1) {
-          j = Math.floor(Math.random() * (i + 1));
-          temp = array[i];
-          array[i] = array[j];
-          array[j] = temp;
+  
+  componentDidMount() {
+    this.setState({ characters: this.shuffle(this.state.characters) });
+  }  
+  
+  correctClick = (newData) => {
+    const newScore = this.state.score + 1;
+    const highScore = this.state.highScore;
+    const newHighScore = Math.max(highScore, newScore);
+    
+    this.setState({
+      characters: this.shuffle(newData),
+      score: newScore,
+      highScore: newHighScore
+    });
+  };
+  
+  wrongClick = (data) => {
+    this.setState({
+      characters: this.reset(data),
+      score: 0,
+    });
+  };
+  
+  handleClick = (id) => {
+    let correct = false;
+    const newData = this.state.characters.map(item => {
+      const newCharacter = {...item};
+      if (newCharacter.id === id) {
+        if (!newCharacter.clicked) {
+          newCharacter.clicked = 1;
+          correct = true;
+        }
       }
-      return array
-  }; 
+      return newCharacter
+    });
+    correct ? this.correctClick(newData) : this.wrongClick(newData);
+  };
   
 
   render() {
     return (
       <div className='App'>
+
         <Header />
-        <Scores highScore={this.state.highScore} yScore={this.state.score}/>
+        <Scores highScore={this.state.highScore} yScore={this.state.score} wins={this.state.wins} losses={this.state.losses} gameover={this.state.gameOver}/>
+        
         <Wrapper>
           {this.state.characters.map(character => (
 
@@ -49,12 +90,11 @@ class App extends Component {
             name={character.name}
             id={character.id}
             key={character.id}
-            clicked={this.state.clicked[character.id]}
-            score={this.handleClick}
+            clicked={character.clicked}
+            handleClick={this.handleClick}
             />
             ))}
         </Wrapper>
-          <Record wins={this.state.wins} losses={this.state.losses}/>
       </div>
     )
   }

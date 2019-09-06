@@ -44,17 +44,27 @@ shuffle = array => {
     const highScore = this.state.highScore;
     const newHighScore = Math.max(highScore, newScore);
     
+    if (newScore !== 24) {
     this.setState({
       characters: this.shuffle(newData),
       score: newScore,
       highScore: newHighScore
-    });
+    })}
+    else {
+      this.setState({
+        characters: this.reset(newData),
+        score: 0,
+        highScore: newHighScore,
+        wins: this.state.wins + 1
+      })}
+    
   };
   
   wrongClick = (data) => {
     this.setState({
       characters: this.reset(data),
       score: 0,
+      losses: this.state.losses +1
     });
   };
   

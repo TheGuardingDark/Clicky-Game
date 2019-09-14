@@ -5,6 +5,7 @@
 Notes For Running the App
 ==============================
 The deployed game can be found here: 
+https://video-game-clicky.herokuapp.com/
 
 
 APP FUNCTIONALITY
